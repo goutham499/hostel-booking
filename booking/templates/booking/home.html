@@ -1,0 +1,48 @@
+
+{% extends 'booking/base.html' %}
+
+{% block title %}Available Rooms{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Available Rooms</h2>
+
+<div class="row">
+    {% for room in rooms %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ room.name }}</h5>
+                <p class="card-text">
+                    <strong>Status:</strong> 
+                    {% if room.is_available %}
+                        <span class="text-success">Available</span>
+                    {% else %}
+                        <span class="text-danger">Booked</span>
+                    {% endif %}
+                </p>
+
+                <!-- ✅ Embedded Google Map -->
+                {% if room.location %}
+                <div class="mb-2">
+                    <iframe
+                      width="100%"
+                      height="200"
+                      frameborder="0"
+                      style="border:0"
+                      src="https://www.google.com/maps?q={{ room.location|urlencode }}&output=embed"
+                      allowfullscreen>
+                    </iframe>
+                </div>
+                {% endif %}
+
+                {% if room.is_available %}
+                <a href="{% url 'book_room' room.id %}" class="btn btn-primary">Book Now</a>
+                {% else %}
+                <button class="btn btn-secondary" disabled>Not Available</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
