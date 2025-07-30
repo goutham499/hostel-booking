@@ -22,4 +22,5 @@ from django.urls import path, include  # ✅ include is needed for app routing
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('booking.urls')),  # ✅ route to your app
+    path('', include('pwa.urls')),
 ]
